@@ -1,0 +1,12 @@
+const express = require("express");
+const router = express.Router();
+const db = require("../models");
+const md5 = require("md5");
+const Usercontroller = require("../controllers/todo");
+router.get("/all", Usercontroller.getUsers);
+router.post("/new", Usercontroller.createUser);
+router.post("/user/login", Usercontroller.userLogin);
+router.get("/user/get", Usercontroller.getId);
+router.put("/user/delete", Usercontroller.deleteUser);
+// router.get("/users/list/:page", Usercontroller.getPages);
+module.exports = router;
