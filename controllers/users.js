@@ -3,17 +3,16 @@ const db = require("../models");
 module.exports = {
   getUsers: async (req, res) => {
     try {
-      let users = await db.Todo.findAll();
+      let users = await db.User.findAll();
       res.json(users);
     } catch (err) {
       res.send(err);
     }
   },
-
   createUser: async (req, res) => {
     try {
       if (md5(req.body.password) === md5(req.body.confirm_password)) {
-        let newUser = await db.Todo.create({
+        let newUser = await db.User.create({
           username: req.body.username,
           password: md5(req.body.password),
           confirm_password: md5(req.body.confirm_password),
@@ -31,7 +30,7 @@ module.exports = {
   },
   userLogin: async (req, res) => {
     try {
-      let loginDetails = db.Todo.findAll({
+      let loginDetails = db.User.findAll({
         where: {
           username: req.body.username,
           password: md5(req.body.password),
@@ -42,10 +41,9 @@ module.exports = {
       res.send(err);
     }
   },
-
   getId: async (req, res) => {
     try {
-      let accessDetails = db.Todo.findAll({
+      let accessDetails = db.User.findAll({
         where: { id: req.headers.accesstoken },
       });
       res.json(accessDetails);
@@ -53,13 +51,23 @@ module.exports = {
       res.send(err);
     }
   },
-
   deleteUser: async (req, res) => {
     try {
-      await db.Todo.destroy({
+      await db.User.destroy({
         where: { id: req.body.id },
       });
       res.json({ success: true });
+    } catch (err) {
+      res.send(err);
+    }
+  },
+  getPages: async (req, res) => {
+    try {
+      const page = await db.User.findAll({
+        limit: 10,
+        offset: req.params.page * 10,
+      });
+      res.json(page);
     } catch (err) {
       res.send(err);
     }

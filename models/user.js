@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-  const Todo = sequelize.define("Todo", {
+  const User = sequelize.define("User", {
     username: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -27,5 +27,5 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false,
     },
   });
-  return Todo;
+  return User;
 };
